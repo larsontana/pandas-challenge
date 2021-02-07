@@ -1,5 +1,5 @@
 # pandas-challenge
-Pandas homework. 
+
 # setup, set up the pandas lib and also numpy
 
 import pandas as pd
