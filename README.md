@@ -44,7 +44,7 @@ total_revenue = purchase_data:["Price"]).sum()
 
 # Make it a data frame
 
-summary_df = pd.DataFrame({"Number of Unique Items":[number_of_unique_items], "Avg Price":[average_price],"Number of Purchases":[number_of_purchases],"Total Revenue":[total_revenue]})
+summary_df = pd.DataFrame({"Number of Unique Items":[number_of_unique_items], "Average Price":[average_price],"Number of Purchases":[number_of_purchases],"Total Revenue":[total_revenue]})
 
 # format with currency style
 
