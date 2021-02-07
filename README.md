@@ -147,3 +147,32 @@ age_demographics.index.name = None
 age_demographics.style.format({"Percentage of Players":"{:,.2f}"})
 
 # PURCHASE ANALYSIS
+# Count purchases by age group
+purchase_count_age = age_grouped["Purchase ID"].count()
+
+# Obtain average purchase price by age group 
+
+average_purchase_price_age = age_grouped[Price"].mean()
+
+# Calculate total purchase value by age group 
+
+total_purchase_value = age_grouped["Price"].sum()
+
+# Calculate the average purchase per person
+
+average_purchase_per_person_age: total_purchase_value/total_count_age
+
+# Create data frame with obtained values
+
+age_demographics = pd.DataFrame({"Purchase Count": purchase_count_age,
+                                 "Average Purchase Price": avg_purchase_price_age,
+                                 "Total Purchase Value":total_purchase_value,
+                                 "Average Purchase Total per Person": avg_purchase_per_person_age})
+# Format the data frame with no index name in the corner
+age_demographics.index.name = None
+
+# Add currency style
+age_demographics.style.format({"Average Purchase Price":"${:,.2f}",
+                               "Total Purchase Value":"${:,.2f}",
+                               "Average Purchase Total per Person":"${:,.2f}"})
+# TOP SPENDERS
