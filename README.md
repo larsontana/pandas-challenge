@@ -233,3 +233,11 @@ popular_formatted.style.format({"Item Price":"${:,.2f}",
                                 "Total Purchase Value":"${:,.2f}"})
                                
 # MOST PROFITABLE ITEMS
+
+# take the most popular ones and change to the highest totals
+popular_formatted = most_popular_items.sort_values(["Total Purchase Value"],
+                                                   ascending=False).head()
+# Format with currency style
+popular_formatted.style.format({"Item Price":"${:,.2f}",
+                                "Total Purchase Value":"${:,.2f}"})
+
