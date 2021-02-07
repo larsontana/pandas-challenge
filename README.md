@@ -205,4 +205,31 @@ formatted_spenders.style.format({"Average Purchase Total":"${:,.2f}",
                                  "Average Purchase Price":"${:,.2f}", 
                                  "Total Purchase Value":"${:,.2f}"})
 # MOST POPULAR ITEMS
-                           
+ # Display in DF all item ID and name and how much it is                          
+items = purchase_data[["Item ID", "Item Name", "Price"]]
+
+# Group the item data by item ID and item name
+
+item_stats = items.groupby.("Item ID", "Item Name"])
+
+# count how many times an item has been purchased
+
+purchase_count_item = item_stats["Price"].count()
+
+# add the total of how much it was
+
+purchase_value = (item_stats["Price"].sum()
+
+# create data frame
+
+most_popular_items = pd.DataFrame({"Purchase Count": purchase_count_item, 
+                                   "Item Price": item_price,
+                                   "Total Purchase Value":purchase_value})
+                                   
+popular_formatted = most_popular_items.sort_values(["Purchase Count"], ascending=False).head()
+                                  
+# Format with currency style
+popular_formatted.style.format({"Item Price":"${:,.2f}",
+                                "Total Purchase Value":"${:,.2f}"})
+                               
+# MOST PROFITABLE ITEMS
