@@ -176,3 +176,33 @@ age_demographics.style.format({"Average Purchase Price":"${:,.2f}",
                                "Total Purchase Value":"${:,.2f}",
                                "Average Purchase Total per Person":"${:,.2f}"})
 # TOP SPENDERS
+
+# Group purchase data by screen names
+
+spender_stats = purchase.data.groupby("SN")
+
+# Count the total purchases by name
+
+purchase_count_spender = spender_stats[Purchase ID].count()
+
+# Calculate the average purchase by name
+
+avg_purchase_price_spender = spender_stats("Price").sum
+
+# Data frame
+
+top_spenders = pd.DataFrame({"Purchase Count": purchase_count_spender,
+                             "Average Purchase Price": avg_purchase_price_spender,
+                             "Total Purchase Value":purchase_total_spender})
+# Format by the top 5
+# Head function only views the values sorted
+formatted_spenders = top_spenders.sort_values(["Total Purchase Value"], ascending=False).head()
+
+# Format with currency and decimal places
+
+# Format with currency style
+formatted_spenders.style.format({"Average Purchase Total":"${:,.2f}",
+                                 "Average Purchase Price":"${:,.2f}", 
+                                 "Total Purchase Value":"${:,.2f}"})
+# MOST POPULAR ITEMS
+                           
