@@ -1,243 +1,118 @@
-# pandas-challenge
+Pandas Homework - Pandas, Pandas, Pandas
 
-# setup, set up the pandas lib and also numpy
+Background
+The data dive continues!
+Now, it's time to take what you've learned about Python Pandas and apply it to new situations. For this assignment, you'll need to complete one of two (not both)  Data Challenges. Once again, which challenge you take on is your choice. Just be sure to give it your all -- as the skills you hone will become powerful tools in your data analytics tool belt.
 
-import pandas as pd
-import numpy as np
+Before You Begin
 
-# pd means pandas like import the pandas
-# np means num py like import the numpy. numpy is a library for scientific computing
-# a numpy array is a grid of all values all of the same tpe . the number of dimensions is the rank
-# numpy provides a large set of numeric datatypes that you can use to contruct arrays 
 
-# load file
+Create a new repository for this project called pandas-challenge. Do not add this homework to an existing repository.
 
-file_to_load = "Resources/purchase_data.csv"
 
-#read the file to download data
+Clone the new repository to your computer.
 
-purchase_data = pd.read_csv(file_to_load)
 
-# TOTAL NUM OF PLAYERS
+Inside your local git repository, create a directory for the Pandas Challenge you choose. Use folder names corresponding to the challenges: HeroesOfPymoli or  PyCitySchools.
 
-total_players = len(purchase_data["SN"].value_counts())
-# total players is the length of the amount of screen names in purchase data
 
-player_count = pd.DataFrame({"Total Players":[total_players]})
-player_count
+Add your Jupyter notebook to this folder. This will be the main script to run for analysis.
 
-# essentially put the amount of players in a variable and then display it as a data frame which is from the pandas libary
 
-# NUM OF UNIQUE ITEMS, AVG PRICE, PURCHASE COUNT, REVENUE 
+Push the above changes to GitHub or GitLab.
 
-num_unique_items = len((purchase_data:["Item ID"]).unique())
 
-# so the number of unique items is gonna be in the purchase data obvi, under the column item id and then it has to be unique so add the unique one which i believe comes from the pandas
-# len is the number of items in an object so like the number of characters in the string of items cuase its unique
 
-average_price = purchase_data:["Price"]).mean()
+Option 1: Heroes of Pymoli
 
-# essentially go into the purch data and find price then take the mean of it which is a
+Congratulations! After a lot of hard work in the data munging mines, you've landed a job as Lead Analyst for an independent gaming company. You've been assigned the task of analyzing the data for their most recent fantasy game Heroes of Pymoli.
+Like many others in its genre, the game is free-to-play, but players are encouraged to purchase optional items that enhance their playing experience. As a first task, the company would like you to generate a report that breaks down the game's purchasing data into meaningful insights.
+Your final report should include each of the following:
 
-number_of_purchases = purchase_data:["Purchase ID"]).count()
-total_revenue = purchase_data:["Price"]).sum()
+Player Count
 
-# Make it a data frame
+Total Number of Players
 
-summary_df = pd.DataFrame({"Number of Unique Items":[number_of_unique_items], "Average Price":[average_price],"Number of Purchases":[number_of_purchases],"Total Revenue":[total_revenue]})
 
-# format with currency style
+Purchasing Analysis (Total)
 
-summary_df.style.format({'Average Price':"${:,.2f}",
-                         'Total Revenue': '${:,.2f}'})
-                        
-# GENDER DEMOGRAPHICS
-# group female, male, other
-gender_stats = purchase_data.groupby("Gender")
+Number of Unique Items
+Average Purchase Price
+Total Number of Purchases
+Total Revenue
 
-# count the screen names by gender in the gender stats object and only the unique ones 
 
-total_count_gender = gender_stats.nunique()["SN"]
+Gender Demographics
 
-# find the percentage of players, so divide the values above by the total count of players
+Percentage and Count of Male Players
+Percentage and Count of Female Players
+Percentage and Count of Other / Non-Disclosed
 
-percentage_of_players = total_count_gender / total_players * 100
 
-# make df of this
+Purchasing Analysis (Gender)
 
-gender_demographics = pd.DataFrame({"Percentage of Players": percentage_of_players, "Total Count": total_count_gender})
+The below each broken by gender
 
-# format data frame to not have index name in the corner (not sure why we do this tbh but its ugly without it
+Purchase Count
+Average Purchase Price
+Total Purchase Value
+Average Purchase Total per Person by Gender
 
-gender_demographics.index.name = None
 
-# format values sorted by total count 
 
-gender_demographics.sort_values(["Total Count"], ascending = False).style.format({Percentage of Players":"{:.2f}"})
 
-# Purchase Analysis
+Age Demographics
 
-# Count the total number of purchases by gender 
-# essentially counting the purchases by gender
+The below each broken into bins of 4 years (i.e. <10, 10-14, 15-19, etc.)
 
-purchase_count = gender_stats["Purchase ID"].count()
+Purchase Count
+Average Purchase Price
+Total Purchase Value
+Average Purchase Total per Person by Age Group
 
-# average purchases by gender 
 
-avg_purchase_price = gender_stats["Price"].mean()
 
-# average purchase total by gender
 
-avg_purchase_price = gender_stats["Price"].sum()
+Top Spenders
 
-# average purchase total by gender divided by purchases of unique players
+Identify the the top 5 spenders in the game by total purchase value, then list (in a table):
 
-average_purchase_per_person = avg_purchase_total/total_count_gender
+SN
+Purchase Count
+Average Purchase Price
+Total Purchase Value
 
-# data frame 
 
-gender_demographics = pd.DataFrame({"Purchase Count": purchase_count, 
-                                    "Average Purchase Price": avg_purchase_price,
-                                    "Average Purchase Value":avg_purchase_total,
-                                    "Avg Purchase Total per Person": avg_purchase_per_person})
-                                    
-# format
 
-gender_demographics.index.name = "Gender"
 
-# add currency
+Most Popular Items
 
-gender_demographics.style.format({"Average Purchase Value":"${:,.2f}",
-                                  "Average Purchase Price":"${:,.2f}",
-                                  "Avg Purchase Total per Person":"${:,.2f}"})
-                                  
-# AGE DEMOGRAPHICS
-# Making the bins
-# Seperate the different bins using commas
-age_bins = [0, 9.90, 14.90, 19.90, 24.90, 29.90, 34.90, 39.90, 99999]
+Identify the 5 most popular items by purchase count, then list (in a table):
 
-# Name the bins
+Item ID
+Item Name
+Purchase Count
+Item Price
+Total Purchase Value
 
-group_names = ["<10", "10-14","15-19","20-24","25-29", "30-34", "35-39", "40+"]
 
-# Segment and sort age values into bins established above 
-# Use cut when you need to segment and sort data values into bins. This function is also useful for going from a continuous variable to a categorical variable. For example, cut could convert ages to groups of age ranges. Supports binning into an equal number of bins, or a pre-specified array of bins.
-# So essentially what is happening is we are saying take all of this data and make a variable by age group using bins of ages. The cut function allows the age column to be seperated in bins with the labels established in the group_names object
 
-purchase_data["Age Group"] = pd.cut(purchase_data["Age"], age_bins, labels = group_names)purchase_data
 
-# Create new data frame with age group 
+Most Profitable Items
 
-age_grouped = purchase_data.groupby("Age Group")
+Identify the 5 most profitable items by total purchase value, then list (in a table):
 
-# Count total players by age category
+Item ID
+Item Name
+Purchase Count
+Item Price
+Total Purchase Value
 
-total_count_age = age_grouped["SN"].nunique()
 
-# Create data frame with obtained values
 
-age_demographics = pd.DataFrame({"Percentage of Players": percentage_by_age, "Total Count": total_count_age})
+As final considerations:
 
-# Format the data frame with no index name in the corner
-
-age_demographics.index.name = None
-
-# Format percentage with two decimal places 
-
-age_demographics.style.format({"Percentage of Players":"{:,.2f}"})
-
-# PURCHASE ANALYSIS
-# Count purchases by age group
-purchase_count_age = age_grouped["Purchase ID"].count()
-
-# Obtain average purchase price by age group 
-
-average_purchase_price_age = age_grouped[Price"].mean()
-
-# Calculate total purchase value by age group 
-
-total_purchase_value = age_grouped["Price"].sum()
-
-# Calculate the average purchase per person
-
-average_purchase_per_person_age: total_purchase_value/total_count_age
-
-# Create data frame with obtained values
-
-age_demographics = pd.DataFrame({"Purchase Count": purchase_count_age,
-                                 "Average Purchase Price": avg_purchase_price_age,
-                                 "Total Purchase Value":total_purchase_value,
-                                 "Average Purchase Total per Person": avg_purchase_per_person_age})
-# Format the data frame with no index name in the corner
-age_demographics.index.name = None
-
-# Add currency style
-age_demographics.style.format({"Average Purchase Price":"${:,.2f}",
-                               "Total Purchase Value":"${:,.2f}",
-                               "Average Purchase Total per Person":"${:,.2f}"})
-# TOP SPENDERS
-
-# Group purchase data by screen names
-
-spender_stats = purchase.data.groupby("SN")
-
-# Count the total purchases by name
-
-purchase_count_spender = spender_stats[Purchase ID].count()
-
-# Calculate the average purchase by name
-
-avg_purchase_price_spender = spender_stats("Price").sum
-
-# Data frame
-
-top_spenders = pd.DataFrame({"Purchase Count": purchase_count_spender,
-                             "Average Purchase Price": avg_purchase_price_spender,
-                             "Total Purchase Value":purchase_total_spender})
-# Format by the top 5
-# Head function only views the values sorted
-formatted_spenders = top_spenders.sort_values(["Total Purchase Value"], ascending=False).head()
-
-# Format with currency and decimal places
-
-# Format with currency style
-formatted_spenders.style.format({"Average Purchase Total":"${:,.2f}",
-                                 "Average Purchase Price":"${:,.2f}", 
-                                 "Total Purchase Value":"${:,.2f}"})
-# MOST POPULAR ITEMS
- # Display in DF all item ID and name and how much it is                          
-items = purchase_data[["Item ID", "Item Name", "Price"]]
-
-# Group the item data by item ID and item name
-
-item_stats = items.groupby.("Item ID", "Item Name"])
-
-# count how many times an item has been purchased
-
-purchase_count_item = item_stats["Price"].count()
-
-# add the total of how much it was
-
-purchase_value = (item_stats["Price"].sum()
-
-# create data frame
-
-most_popular_items = pd.DataFrame({"Purchase Count": purchase_count_item, 
-                                   "Item Price": item_price,
-                                   "Total Purchase Value":purchase_value})
-                                   
-popular_formatted = most_popular_items.sort_values(["Purchase Count"], ascending=False).head()
-                                  
-# Format with currency style
-popular_formatted.style.format({"Item Price":"${:,.2f}",
-                                "Total Purchase Value":"${:,.2f}"})
-                               
-# MOST PROFITABLE ITEMS
-
-# take the most popular ones and change to the highest totals
-popular_formatted = most_popular_items.sort_values(["Total Purchase Value"],
-                                                   ascending=False).head()
-# Format with currency style
-popular_formatted.style.format({"Item Price":"${:,.2f}",
-                                "Total Purchase Value":"${:,.2f}"})
-
+You must use the Pandas Library and the Jupyter Notebook.
+You must submit a link to your Jupyter Notebook with the viewable Data Frames.
+You must include a written description of three observable trends based on the data.
+See Example Solution for a reference on expected format.
